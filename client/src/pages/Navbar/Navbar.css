@@ -1,0 +1,28 @@
+.main_navbar_div
+{
+    width: 100vw;
+    height: 10vh;
+    background-color: transparent;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+}
+.colored-background
+{
+  background-color:rgba(0, 255, 13, 0.9);
+}
+.logo_div img
+{
+    margin-left: 10px;
+    height: 8vh;
+    cursor: pointer;
+}
+.links
+{
+    width: 20%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-right: 10px;
+}

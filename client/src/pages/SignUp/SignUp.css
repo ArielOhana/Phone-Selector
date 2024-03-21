@@ -1,0 +1,25 @@
+.sign_up_main
+{
+    display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../images/GreenBackgroundImage.jpg");
+  background-size: cover; 
+  background-position: center; 
+  position: relative; 
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.sign_up_container
+{
+    width: 50%;
+    height: 80%;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 7px;
+    border: 5px solid #f900ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}

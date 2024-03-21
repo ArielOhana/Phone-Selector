@@ -1,0 +1,77 @@
+.main_homepage_div {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../images/GreenBackgroundImage.jpg");
+  background-size: cover; 
+  background-position: center; 
+  position: relative; 
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+.above_main_homepage {
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  height: 30%;
+  align-items: center;
+  flex-direction: column;
+}
+#input_div
+{
+  width: 60%;
+  margin-bottom: 20%;
+}
+
+
+
+.progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--accent);
+  bottom: 100px;
+}
+
+.parallax {
+  overflow: hidden;
+  letter-spacing: -2px;
+  line-height: 0.8;
+  margin: 0;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.parallax .scroller {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 64px;
+  display: flex;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.parallax span {
+  display: block;
+  margin-right: 30px;
+  color:  rgb(255, 255, 255);
+}
+.moving_line_div
+{
+  width: 100vw;
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0, 138, 0);
+}
+.about_us_div
+{
+  width: 100vw;
+  min-height: 40vh;
+}
