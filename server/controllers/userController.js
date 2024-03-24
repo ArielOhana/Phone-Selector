@@ -2,11 +2,6 @@ const Users = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
-const dotenv = require("dotenv");
-const puppeteer = require('puppeteer');
-const cheerio = require('cheerio');
-
-// const chunks = [];//py
 const saltRounds = 11;
 
 exports.createUser = async (req, res) => {
@@ -249,74 +244,3 @@ exports.verifyEmail = async (req, res) => {
     `);
     }
 };
-exports.getPhones = async (req, res) => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    const Output = [];
-
-    const SelectedPhone = req.params.phone;
-
-    if (SelectedPhone) {
-        try {
-            await page.goto(process.env.INFOWEB);
-            await page.type(process.env.WEBSCROLLERONE, SelectedPhone);
-            await page.keyboard.press('Enter');
-            await page.waitForNavigation();
-            const html = await page.content();
-            const $ = cheerio.load(html);
-            
-            const maindivs = await page.$$('div.List__item___1r5pi');
-            for (element of maindivs)
-            {
-                const image = await element.$eval('div > div', div => div.style.backgroundImage);
-                const link = await element.$eval('div > div.List__content___ohPG0 > a', a => {return a.href.replace("https://versus.com/en/","")})
-                const phone = await element.$eval('div > div.List__content___ohPG0 > a', a => {return a.text.trim()})
-                Output.push({phone, link, image})
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            res.status(500).send('Internal Server Error');
-            return;
-        } finally {
-            await browser.close();
-        }
-    } else {
-        res.status(400).send('No phone name provided.');
-        return;
-    }
-
-    res.status(200).json(Output);
-};
-exports.getPhonesDetailsByURL = async (req, res) => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    try {
-        let properties = [];
-        let rating = [];
-        const url = process.env.INFOWEB+req.params.url;
-        await page.goto(url);
-        const html = await page.content();
-        const $ = cheerio.load(html);
-        const liElements = await page.$$(process.env.WEBSCROLLERTWO);
-        for (const liElement of liElements) {
-            const Catagory = await liElement.$eval('span', span => span.textContent.trim());
-            const Value = await liElement.$eval('em', em => em.textContent.trim());
-            properties.push({ Catagory, Value });
-        }
-        const overallRating = await page.$eval('div.Rating__score___1UowR b', b => b.textContent.trim());
-        rating.push({Catagory: "overallRating", Value: overallRating})
-         const divElements = await page.$$('div.Features__feature___1foJP')
-         for (const element of divElements) {
-            const Catagory = await element.$eval('p', p => p.textContent.trim());
-            const Value = await element.$eval('div > div > b', b => b.textContent.trim());
-            rating.push({ Catagory, Value });
-
-         }
-        res.status(200).json({properties, rating});
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
-    } finally {
-        await browser.close();
-    }
-}

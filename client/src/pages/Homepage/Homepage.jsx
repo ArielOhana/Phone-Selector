@@ -3,7 +3,17 @@ import './Homepage.css';
 import SearchIcon from '@mui/icons-material/Search';
 import MovingLine from './MovingLineComponent/MovingLine';
 import AboutUs from './AboutUs/AboutUs.jsx';
+import { useForm } from 'react-hook-form'
 function Homepage() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data); 
+  };
+  const handleIconClick = () => {
+    handleSubmit(onSubmit)(); // Manually trigger form submission
+  };
+
   return (
     <>
     <div className="main_homepage_div">
@@ -25,7 +35,9 @@ function Homepage() {
             </div>
             <div id='input_div'>
   <div style={{ position: 'relative' }}>
+  <form onSubmit={handleSubmit(onSubmit)}>
     <input
+     {...register("phone")} 
       type="text"
       style={{
         width: '100%',
@@ -40,7 +52,9 @@ function Homepage() {
         color:'white',
       }}
     />
+
     <SearchIcon
+    onClick={handleIconClick}
       style={{
         position: 'absolute',
         top: '50%',
@@ -50,6 +64,7 @@ function Homepage() {
         cursor:'pointer',
       }}
     />
+    </form>
   </div>
   </div>
 </div>
