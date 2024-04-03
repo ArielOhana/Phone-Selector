@@ -6,10 +6,10 @@ import Logo from "../../images/PhoneSelectorImage.png";
 import BlackLogo from "../../images/BlackPhoneSelectorImage.png";
 import { Button, Modal, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import SignUp from "../SignUp/SignUp.jsx";
+
 
 function Navbar() {
-  const { userLogged, user,modalOpen, setModalOpen } = useContext(Context);
+  const { userLogged, user} = useContext(Context);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {

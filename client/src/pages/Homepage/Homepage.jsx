@@ -1,14 +1,19 @@
-import { Input, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import './Homepage.css';
 import SearchIcon from '@mui/icons-material/Search';
 import MovingLine from './MovingLineComponent/MovingLine';
 import AboutUs from './AboutUs/AboutUs.jsx';
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import Context from '../../Context.jsx';
 function Homepage() {
+  const {setPhoneSearched} = useContext(Context)
   const { register, handleSubmit, formState: { errors } } = useForm();
-
+  const navigate = useNavigate();
   const onSubmit = (data) => {
-    console.log(data); 
+    setPhoneSearched(data.phone);
+    navigate('/Searchpage');
   };
   const handleIconClick = () => {
     handleSubmit(onSubmit)(); // Manually trigger form submission

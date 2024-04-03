@@ -104,7 +104,6 @@ exports.Signin = async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await Users.findOne({ username });
-
         if (!user) {
             return res.status(200).json({
                 status: false,
@@ -127,7 +126,7 @@ exports.Signin = async (req, res) => {
                 res.status(200).send({
                     status: true,
                     message: "Logged in successfully",
-                    user: {username: user.username, email: user.email},
+                    user: {username: user.username, email: user.email, isAdmin: user.isAdmin},
                 });
             } else {
                 return res.status(200).json({

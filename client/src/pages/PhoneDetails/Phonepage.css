@@ -1,0 +1,89 @@
+.phonepage-header
+{
+    min-height: 10vh;
+    width: 100vw;
+    background-color: green;
+}
+.phonepage-main
+{
+    min-height: 90vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.phonepage-image-div
+{
+    width: 45%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.phonepage-image-div img
+{
+    padding: 10px;
+    max-width: 90%;
+    max-height: 90vh;
+    animation: slideInFromLeft 2s ease forwards;
+    opacity: 0;
+}
+.phonepage-details-div
+{
+    width: 45%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+.phonepage-details-text
+{
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+}
+.phonepage-name
+{
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    margin-left: 3%;
+    text-decoration: underline;
+    animation: slideInFromRight 2s ease forwards;
+    opacity: 0;
+}
+.phonepage-verify-div
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 6px;
+}
+.phonepage-verify-text
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }

@@ -42,9 +42,9 @@ export const ContextProvider = ({ children }) => {
   const [toastData, setToastData] = useState({});
   const [user, setUser] = useState({});
   const [userLogged,setUserLogged] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [phoneSearched,setPhoneSearched] = useState();
   return (
-    <Context.Provider value={{ user, userLogged,setActiveUser, postRequest, getRequest, toastData, setToastData,modalOpen, setModalOpen}}>
+    <Context.Provider value={{ user, userLogged,setActiveUser, postRequest, getRequest,phoneSearched,setPhoneSearched, toastData, setToastData}}>
       {children}
     </Context.Provider>
   );

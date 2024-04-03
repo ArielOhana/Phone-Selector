@@ -116,38 +116,12 @@ const themeOptions = {
   
  
 
-  const closeModal = () => {
-    Data.setModalOpen(false);
-  };
-
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      zIndex: "9999",
-      width: "50vw",
-      height: "50vh",
-      position: "absolute", 
-    },
-  };
-
   return (
     <div style={{ backgroundColor: theme.palette.background.default }}>
 
       <ThemeProvider theme={theme}>   
       <ToastContainer/>
         <Navbar/>
-        <Modal
-        id="Modal"
-        open={Data.modalOpen}
-        onClose={closeModal}
-        style={customStyles}
-      >
-        <div>
-          <SignUp />
-        </div>
-      </Modal>
         <Outlet />
         <Footer/>
       </ThemeProvider>

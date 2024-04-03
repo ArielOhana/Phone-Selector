@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const Phone = require('../models/phonemodel');
+const fuzzy = require('fuzzy-search');
 exports.getPhones = async (req, res) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -20,8 +21,9 @@ exports.getPhones = async (req, res) => {
             const maindivs = await page.$$('div.List__item___1r5pi');
             for (element of maindivs)
             {
-                const image = await element.$eval('div > div', div => div.style.backgroundImage);
-                const url = await element.$eval('div > div.List__content___ohPG0 > a', a => {return a.href.replace("https://versus.com/en/","")})
+                let image = await element.$eval('div > div', div => div.style.backgroundImage);
+                image = image.match(/http.*?\.jpg/g)[0];
+                const url = await element.$eval('div > div.List__content___ohPG0 > a', a => {return a.href.replace("https://versus.com/en/","")});
                 const name = await element.$eval('div > div.List__content___ohPG0 > a', a => {return a.text.trim()})
                 Output.push({name, url, image})
             }
@@ -79,7 +81,7 @@ exports.AddPhone = async (req,res) =>{
         const currentphone = await Phone.findOne({ name })
         if (currentphone)
         {
-            res.status(200).json({message: "phone already exists in the database", phone: currentphone})
+            res.status(200).json({content: "phone already exists in the database",type:'info' , phone: currentphone})
         }
         else
         {
@@ -99,7 +101,7 @@ exports.AddPhone = async (req,res) =>{
             properties,
             rating,
         })
-        res.status(200).json({message:"new phone added successfully to the database", phone: newphone})
+        res.status(200).json({content:"new phone added successfully to the database",type:"success", phone: newphone})
 
     }
     }
@@ -144,5 +146,23 @@ exports.updatePhone = async (req, res) => {
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
+    }
+}
+exports.getAllPhones = async (req, res) => {
+    try {
+        const searchTerm = req.params.searchTerm || "";
+        console.log("Search Term:", searchTerm);
+        
+        const phones = await Phone.find({ name: { $regex: `.*${searchTerm}.*`, $options: 'i' } });
+        console.log("Phones:", phones);
+        
+        const searcher = new fuzzy(phones, ['name']);
+        const verifiedPhones = searcher.search(searchTerm);
+        console.log("Verified Phones:", verifiedPhones);
+        
+        res.status(200).json(verifiedPhones);
+    } catch (error) {
+        console.error('Error finding similar phone names:', error);
+        throw error;
     }
 }
