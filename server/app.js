@@ -18,7 +18,7 @@ app.use(cors(corsOptions));
 app.post("/users/signin", userController.Signin);
 app.post("/users/signup", userController.createUser);
 app.get("/users/verify/:token", userController.verifyEmail);
-// app.use(userController.verifyToken);
+app.use(userController.verifyToken);
 app.use("/phones",phoneRoutes)
 app.use("/users", userRoutes);
 

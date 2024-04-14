@@ -150,16 +150,10 @@ exports.updatePhone = async (req, res) => {
 }
 exports.getAllPhones = async (req, res) => {
     try {
-        const searchTerm = req.params.searchTerm || "";
-        console.log("Search Term:", searchTerm);
-        
-        const phones = await Phone.find({ name: { $regex: `.*${searchTerm}.*`, $options: 'i' } });
-        console.log("Phones:", phones);
-        
+        const searchTerm = req.params.searchTerm || "";      
+        const phones = await Phone.find({ name: { $regex: `.*${searchTerm}.*`, $options: 'i' } });        
         const searcher = new fuzzy(phones, ['name']);
-        const verifiedPhones = searcher.search(searchTerm);
-        console.log("Verified Phones:", verifiedPhones);
-        
+        const verifiedPhones = searcher.search(searchTerm);        
         res.status(200).json(verifiedPhones);
     } catch (error) {
         console.error('Error finding similar phone names:', error);

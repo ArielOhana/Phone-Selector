@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import Context from "../../Context";
 import "./Phonepage.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import RadarChart from "react-svg-radar-chart";
 import "react-svg-radar-chart/build/css/index.css";
 import { Button } from "@mui/material";
 
 function Phonepage() {
+    const navigate = useNavigate();
   const [receivedData, setReceivedData] = useState(null);
   const { getRequest,postRequest,user,setToastData } = useContext(Context);
   const location = useLocation();
@@ -32,6 +33,8 @@ function Phonepage() {
       setReceivedData(response.data);
     } catch (error) {
       console.error("Error fetching API data:", error);
+      setToastData({type:'error', content:`We got no further data on ${phoneData.name}`})
+      navigate("/");
     }
   };
 
@@ -66,7 +69,6 @@ function Phonepage() {
   const validPhoneClick = async() => {
     const response = await postRequest("/phones/Addphone",receivedData);
     setToastData({content: response.data.content,type:response.data.type})
-
   }
   return (
     <>
@@ -74,7 +76,7 @@ function Phonepage() {
       <div className="phonepage-main">
         <div className="phonepage-image-div">
           <img src={phoneData?.image} alt="" />
-          {(user.isAdmin && !verified )&& ( <div className="phonepage-verify-div">
+          {((user.isAdmin && !verified) && receivedData)&& ( <div className="phonepage-verify-div">
                 <h2 className="phonepage-verify-text">Click on the button below to validate this phone data</h2>
                 <Button variant="contained" color="success" size="large" onClick={validPhoneClick} sx={{ fontSize: "2rem" }}>
                         Valid
