@@ -13,9 +13,10 @@ function SearchPage() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isLottieLoaded, setIsLottieLoaded] = useState(false);
     const [fetchedData, setFetchedData] = useState({ verified: [], fetched: [] });
-    const {getRequest,phoneSearched,setPhoneSearched} = useContext(Context)
+    const {getRequest,phoneSearched,setPhoneSearched,setToastData} = useContext(Context)
     const navigate = useNavigate();
     useEffect(() => {
+      try{
       const container = document.getElementById('lottie-container');
       if (container&& !isLottieLoaded) {
         lottie.loadAnimation({
@@ -27,7 +28,17 @@ function SearchPage() {
         });
         setIsLottieLoaded(true);
       }
-      if(phoneSearched) fetchPhone(phoneSearched);
+      if (!phoneSearched)
+      {
+        setToastData({type: "info", content: "Please insert your search"});
+        navigate("/")
+      }
+      fetchPhone(phoneSearched);}
+      catch(error)
+      {
+        setToastData({type: error.type, content: error.message});
+        console.error(error);
+      }
       }, [phoneSearched]);
       const fetchPhone = async (phone) => {
         try {
@@ -40,7 +51,11 @@ function SearchPage() {
           setFetchedData({ verified, fetched });
           setIsLoaded(true);
         } catch (err) {
-          console.error(err.message);
+          console.log(err);
+          if(err.response.data.message == ("Unauthorized: No token provided"))
+            setToastData({type: "info", content: "Please log in before you search"});
+          else
+            setToastData({type: err.response.data.type, content: err.response.data.message});
           navigate("/");
         }
       };

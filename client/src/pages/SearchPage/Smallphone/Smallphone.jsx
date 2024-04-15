@@ -4,7 +4,7 @@ function Smallphone(props) {
   const navigate = useNavigate();
   const { data, verified } = props;
   const handleClick = () => {
-    navigate(`/phonepage`, { state: { phoneData: data, verified} });
+    navigate(`/phonepage`, { state: { phoneData: data, isverified: verified} });
   };
   return (
     <div className="smallphone-main-div" onClick={handleClick}>

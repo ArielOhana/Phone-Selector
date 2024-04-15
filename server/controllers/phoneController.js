@@ -117,7 +117,7 @@ exports.updatePhone = async (req, res) => {
         const currentPhone = await Phone.findOne({ name: receivedPhone.name });
 
         if (!currentPhone) {
-            return res.status(404).json({ message: 'Phone not found in the database' });
+            return res.status(404).json({ content: 'Phone not found in the database', type:"error" });
         }
 
         const properties = receivedPhone.properties
@@ -142,7 +142,7 @@ exports.updatePhone = async (req, res) => {
             { new: true }
         );
 
-        res.status(200).json({ message: 'Phone updated successfully', phone: updatedPhone });
+        res.status(200).json({ content: 'Phone updated successfully', type: "success" });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');

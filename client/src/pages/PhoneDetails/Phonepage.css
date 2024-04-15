@@ -67,6 +67,13 @@
     display: flex;
     justify-content: center;
 }
+.edit-input-container
+{
+    margin: 1rem 1rem;
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+}
 @keyframes slideInFromLeft {
     0% {
       transform: translateX(-100%);
